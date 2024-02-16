@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowOrigin",
         builder =>
         {
-            builder.WithOrigins("https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io")
+            builder.WithOrigins("https://8081-fcbeaafebaafceecdfbabefaaddbafbefbdcbddbeb.premiumproject.examly.io")
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -130,10 +130,10 @@ if (app.Environment.IsDevelopment())
 }
  
 app.UseHttpsRedirection();
+app.UseCors("AllowOrigin");
 app.UseRouting();
  
 // Apply CORS policy
-app.UseCors("AllowOrigin");
  
 app.UseAuthentication();
 app.UseAuthorization();
