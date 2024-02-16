@@ -107,8 +107,22 @@ public class SpringappApplicationTests
     // }
 
     [Test, Order(4)]
-    public async Task AddOnController_AddAddon_ValidData_Success()
+public async Task AddOnController_AddAddon_ValidData_Success()
+{
+    // Check if the authentication token is available
+    if (string.IsNullOrEmpty(_generatedToken))
     {
+        // Handle the case where the token is not available
+        Assert.Fail("Authentication token not available");
+        return;
+    }
+
+    // Set up the HttpClient with the base address and authorization header
+    using (var client = new HttpClient())
+    {
+        client.BaseAddress = new Uri("https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io");
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _generatedToken);
+
         var addon = new Addon
         {
             AddonName = "TestAddon",
@@ -117,14 +131,18 @@ public class SpringappApplicationTests
             AddonValidity = "30"
         };
 
+        // Serialize the addon object to JSON and send a POST request
         string requestBody = JsonConvert.SerializeObject(addon);
-        HttpResponseMessage response = await _httpClient.PostAsync("/api/addAddon", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+        HttpResponseMessage response = await client.PostAsync("/api/addAddon", new StringContent(requestBody, Encoding.UTF8, "application/json"));
 
         Console.WriteLine(response.StatusCode);
         string responseString = await response.Content.ReadAsStringAsync();
         Console.WriteLine(responseString);
 
+        // Check if the request was successful (status code 200 OK) and the response message
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         Assert.AreEqual("Addon added successfully", responseString);
     }
+}
+
 }
