@@ -1,6 +1,7 @@
 using System;
 using dotnetapp.Data;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace dotnetapp.Models
 {
@@ -18,9 +19,9 @@ namespace dotnetapp.Models
     // Foreign key for Plan table
     [ForeignKey("Plan")]
     public long PlanId { get; set; }
-
+   // [JsonIgnore]
     // Navigation properties
-    public virtual User User { get; set; }
-    public virtual Plan Plan { get; set; }
+    public virtual User? User { get; set; }
+  public virtual Plan? Plan { get; set; }
 }
 }
