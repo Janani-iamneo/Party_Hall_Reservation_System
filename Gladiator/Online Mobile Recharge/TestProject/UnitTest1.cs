@@ -1,148 +1,92 @@
-using NUnit.Framework;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
+using dotnetapp.Data;
 using dotnetapp.Models;
-
-[TestFixture]
-public class SpringappApplicationTests
+using dotnetapp.Services;
+using dotnetapp.Repositories;
+using Microsoft.AspNetCore.Authorization;
+ 
+[Route("api/")]
+[ApiController]
+public class PlanController : ControllerBase
 {
-    private HttpClient _httpClient;
-    private string _generatedToken;
-
-    [SetUp]
-    public void Setup()
+    private readonly ApplicationDbContext _context;
+ 
+    public PlanController(ApplicationDbContext context)
     {
-        _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io"); 
+        _context = context;
     }
-
-    [Test, Order(1)]
-    public async Task Backend_TestRegisterUser()
+ 
+    [Authorize(Roles = "admin")]
+    // POST: api/admin/addPlan
+    [HttpPost("addPlan")]
+    public IActionResult AddPlan([FromBody] Plan plan)
     {
-        string uniqueId = Guid.NewGuid().ToString();
-
-        // Generate a unique userName based on a timestamp
-        string uniqueUsername = $"abcd_{uniqueId}";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-        var registrationRequest = new
+        if (plan == null)
         {
-            Username = uniqueUsername,
-            Password = "abc@123A",
-            Email = uniqueEmail,
-            MobileNumber = "1234567890",
-            Role = "customer" // or "admin" based on your requirements
-        };
-
-        string requestBody = JsonConvert.SerializeObject(registrationRequest);
-        HttpResponseMessage response = await _httpClient.PostAsync("/api/register", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-
-        Console.WriteLine(response.StatusCode);
-        string responseString = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(responseString);
-
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            return BadRequest("Invalid data");
+        }
+ 
+        _context.Plans.Add(plan);
+        _context.SaveChanges();
+ 
+        return Ok("Plan added successfully");
     }
-
-    // [Test, Order(2)]
-    // public async Task Backend_TestRegisterAdmin()
-    // {
-    //     string uniqueId = Guid.NewGuid().ToString();
-    //     string uniqueUsername = $"abcd_{uniqueId}";
-    //     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-    //     await RegisterAndLoginAsync(uniqueUsername, "abc@123A", "admin", "/api/auth/register", "/api/auth/login");
-    // }
-
-    // [Test, Order(3)]
-    // public async Task Backend_TestLoginAdmin()
-    // {
-    //     string uniqueId = Guid.NewGuid().ToString();
-    //     string uniqueUsername = $"abcd_{uniqueId}";
-
-    //     await RegisterAndLoginAsync(uniqueUsername, $"abcdA{uniqueId}@123", "admin", "/api/auth/register", "/api/auth/login");
-    // }
-
-    // private async Task RegisterAndLoginAsync(string username, string password, string role, string registerPath, string loginPath)
-    // {
-    //     // Register the user with the correct role
-    //     var registrationRequest = new
-    //     {
-    //         UserName = username,
-    //         Password = password,
-    //         Role = role
-    //     };
-
-    //     string registrationRequestBody = JsonConvert.SerializeObject(registrationRequest);
-    //     HttpResponseMessage registrationResponse = await _httpClient.PostAsync(registerPath, new StringContent(registrationRequestBody, Encoding.UTF8, "application/json"));
-
-    //     // Check if registration failed with BadRequest
-    //     if (registrationResponse.StatusCode == HttpStatusCode.BadRequest)
-    //     {
-    //         // Log response details for debugging
-    //         string registrationResponseContent = await registrationResponse.Content.ReadAsStringAsync();
-    //         Console.WriteLine($"Registration failed. Response: {registrationResponseContent}");
-    //         // Adjust the Assert to expect BadRequest
-    //         Assert.AreEqual(HttpStatusCode.BadRequest, registrationResponse.StatusCode);
-    //         return;
-    //     }
-
-    //     // Check the response content for success indicators
-    //     string loginResponseContent = await registrationResponse.Content.ReadAsStringAsync();
-    //     if (loginResponseContent.Contains("success indicator")) // Modify this condition based on your actual response content
-    //     {
-    //         Console.WriteLine($"Registration successful. Response: {loginResponseContent}");
-    //     }
-    //     else
-    //     {
-    //         Console.WriteLine($"Unexpected registration response. Response: {loginResponseContent}");
-    //         Assert.Fail("Unexpected registration response.");
-    //     }
-    // }
-
-    [Test, Order(4)]
-public async Task AddOnController_AddAddon_ValidData_Success()
-{
-    // Check if the authentication token is available
-    if (string.IsNullOrEmpty(_generatedToken))
+     
+    [Authorize(Roles = "admin,customer")]
+    // GET: api/admin/getAllPlan
+    [HttpGet("getAllPlan")]
+    public IActionResult GetAllPlans()
     {
-        // Handle the case where the token is not available
-        Assert.Fail("Authentication token not available");
-        return;
+        var plans = _context.Plans.ToList();
+        return Ok(plans);
     }
-
-    // Set up the HttpClient with the base address and authorization header
-    using (var client = new HttpClient())
+ 
+    [Authorize(Roles = "admin")]
+    // PUT: api/admin/editPlan/{planId}
+    [HttpPut("editPlan/{planId}")]
+    public IActionResult EditPlan(long planId, [FromBody] Plan updatedPlan)
     {
-        client.BaseAddress = new Uri("https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io");
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _generatedToken);
-
-        var addon = new Addon
+        var existingPlan = _context.Plans.Find(planId);
+ 
+        if (existingPlan == null)
         {
-            AddonName = "TestAddon",
-            AddonPrice = 10.99,
-            AddonDetails = "Test details",
-            AddonValidity = "30"
-        };
-
-        // Serialize the addon object to JSON and send a POST request
-        string requestBody = JsonConvert.SerializeObject(addon);
-        HttpResponseMessage response = await client.PostAsync("/api/addAddon", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-
-        Console.WriteLine(response.StatusCode);
-        string responseString = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(responseString);
-
-        // Check if the request was successful (status code 200 OK) and the response message
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.AreEqual("Addon added successfully", responseString);
+            return NotFound("Plan not found");
+        }
+ 
+        // Update properties based on your requirements
+        existingPlan.PlanType = updatedPlan.PlanType;
+        existingPlan.PlanName = updatedPlan.PlanName;
+        existingPlan.PlanValidity = updatedPlan.PlanValidity;
+        existingPlan.PlanOffer = updatedPlan.PlanOffer;
+        existingPlan.PlanDescription = updatedPlan.PlanDescription;
+        existingPlan.PlanPrice = updatedPlan.PlanPrice;
+ 
+        _context.SaveChanges();
+ 
+        return Ok("Plan updated successfully");
     }
-}
-
+     
+    [Authorize(Roles = "admin")]
+    // DELETE: api/admin/deletePlan/{planId}
+    [HttpDelete("deletePlan/{planId}")]
+    public IActionResult DeletePlan(long planId)
+    {
+        var plan = _context.Plans.Find(planId);
+ 
+        if (plan == null)
+        {
+            return NotFound("Plan not found");
+        }
+ 
+        _context.Plans.Remove(plan);
+        _context.SaveChanges();
+ 
+        return Ok("Plan deleted successfully");
+    }
 }
