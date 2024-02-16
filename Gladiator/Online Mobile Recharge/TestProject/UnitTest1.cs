@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using dotnetapp.Models;
 
 [TestFixture]
 public class SpringappApplicationTests
@@ -105,5 +106,25 @@ public class SpringappApplicationTests
     //     }
     // }
 
-    
+    [Test, Order(4)]
+    public async Task AddOnController_AddAddon_ValidData_Success()
+    {
+        var addon = new Addon
+        {
+            AddonName = "TestAddon",
+            AddonPrice = 10.99,
+            AddonDetails = "Test details",
+            AddonValidity = "30"
+        };
+
+        string requestBody = JsonConvert.SerializeObject(addon);
+        HttpResponseMessage response = await _httpClient.PostAsync("/api/addAddon", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+
+        Console.WriteLine(response.StatusCode);
+        string responseString = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(responseString);
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("Addon added successfully", responseString);
+    }
 }
