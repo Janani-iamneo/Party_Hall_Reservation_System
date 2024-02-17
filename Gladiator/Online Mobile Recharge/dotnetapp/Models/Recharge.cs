@@ -22,6 +22,6 @@ namespace dotnetapp.Models
    [JsonIgnore]
     // Navigation properties
     public virtual User? User { get; set; }
-  public virtual Plan Plan { get; set; }
+  public virtual Plan? Plan { get; set; }
 }
 }
