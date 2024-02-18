@@ -117,9 +117,9 @@ Console.WriteLine("iddd "+id.UserId);
     {
         new Claim(ClaimTypes.Email, user.Email),
         new Claim(ClaimTypes.NameIdentifier, id.ToString()),
-        // new Claim(ClaimTypes.NameIdentifier, user.Id)
+        new Claim(ClaimTypes.Name, user.UserName),
     };
- 
+
     // Retrieve roles for the user
     var roles = _userManager.GetRolesAsync(user).Result;
  
