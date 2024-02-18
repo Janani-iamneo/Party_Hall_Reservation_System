@@ -26,3 +26,5 @@ namespace dotnetapp.Models
   public virtual Plan? Plan { get; set; }
 }
 }
+
+
