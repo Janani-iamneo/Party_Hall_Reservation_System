@@ -20,7 +20,7 @@ namespace dotnetapp.Controllers
         }
 
         [Authorize(Roles = "admin,customer")]
-        [HttpGet]
+        [HttpGet("Review")]
         public async Task<IActionResult> GetAllReviews()
         {
             try
@@ -35,7 +35,7 @@ namespace dotnetapp.Controllers
         }
 
         [Authorize(Roles = "customer")]
-        [HttpPost]
+        [HttpPost("Review")]
         public async Task<IActionResult> AddReview([FromBody] Review review)
         {
             var addedReview = await _reviewService.AddReviewAsync(review);
@@ -43,7 +43,7 @@ namespace dotnetapp.Controllers
         }
 
         [Authorize(Roles = "customer")]
-        [HttpPut("{id}")]
+        [HttpPut("Review/{id}")]
         public async Task<IActionResult> UpdateReview(int id, [FromBody] Review updatedReview)
         {
             try
@@ -62,7 +62,7 @@ namespace dotnetapp.Controllers
         }
 
         [Authorize(Roles = "customer")]
-        [HttpDelete("{id}")]
+        [HttpDelete("Review/{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
             try
