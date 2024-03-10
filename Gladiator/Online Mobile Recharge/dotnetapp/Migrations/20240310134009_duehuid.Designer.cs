@@ -12,8 +12,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240216094903_app")]
-    partial class app
+    [Migration("20240310134009_duehuid")]
+    partial class duehuid
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -96,6 +96,15 @@ namespace dotnetapp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("RechargeId"), 1L, 1);
 
+                    b.Property<long?>("AddonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MobileNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MobileOperator")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("PlanId")
                         .HasColumnType("bigint");
 
@@ -112,6 +121,8 @@ namespace dotnetapp.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("RechargeId");
+
+                    b.HasIndex("AddonId");
 
                     b.HasIndex("PlanId");
 
@@ -385,6 +396,10 @@ namespace dotnetapp.Migrations
 
             modelBuilder.Entity("dotnetapp.Models.Recharge", b =>
                 {
+                    b.HasOne("dotnetapp.Models.Addon", "Addon")
+                        .WithMany()
+                        .HasForeignKey("AddonId");
+
                     b.HasOne("dotnetapp.Models.Plan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId")
@@ -396,6 +411,8 @@ namespace dotnetapp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Addon");
 
                     b.Navigation("Plan");
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dotnetapp.Migrations
 {
-    public partial class app : Migration
+    public partial class duehuid : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -215,11 +215,19 @@ namespace dotnetapp.Migrations
                     RechargeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ValidityDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
-                    PlanId = table.Column<long>(type: "bigint", nullable: false)
+                    PlanId = table.Column<long>(type: "bigint", nullable: false),
+                    MobileNumber = table.Column<long>(type: "bigint", nullable: false),
+                    MobileOperator = table.Column<long>(type: "bigint", nullable: false),
+                    AddonId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recharges", x => x.RechargeId);
+                    table.ForeignKey(
+                        name: "FK_Recharges_Addons_AddonId",
+                        column: x => x.AddonId,
+                        principalTable: "Addons",
+                        principalColumn: "AddonId");
                     table.ForeignKey(
                         name: "FK_Recharges_Plans_PlanId",
                         column: x => x.PlanId,
@@ -297,6 +305,11 @@ namespace dotnetapp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Recharges_AddonId",
+                table: "Recharges",
+                column: "AddonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Recharges_PlanId",
                 table: "Recharges",
                 column: "PlanId");
@@ -314,9 +327,6 @@ namespace dotnetapp.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Addons");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -343,6 +353,9 @@ namespace dotnetapp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Addons");
 
             migrationBuilder.DropTable(
                 name: "Plans");
