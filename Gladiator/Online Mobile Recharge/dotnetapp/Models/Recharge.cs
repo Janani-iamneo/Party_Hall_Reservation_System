@@ -53,7 +53,7 @@ namespace dotnetapp.Models
 
         // Foreign key for Addon table
         [ForeignKey("Addon")]
-        public long? AddonId { get; set; }
+        public long AddonId { get; set; }
 
         [JsonIgnore]
         // Navigation properties
