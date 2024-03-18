@@ -47,13 +47,13 @@ namespace dotnetapp.Models
 
         // Foreign key for Plan table
         [ForeignKey("Plan")]
-        public long? PlanId { get; set; }
+        public long PlanId { get; set; }
         public long MobileNumber { get; set; }
         public long MobileOperator { get; set; }
 
         // Foreign key for Addon table
         [ForeignKey("Addon")]
-        public long AddonId { get; set; }
+        public long? AddonId { get; set; }
 
         [JsonIgnore]
         // Navigation properties
