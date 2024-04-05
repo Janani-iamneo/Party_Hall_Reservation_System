@@ -1,4 +1,3 @@
-// src/app/recipe-form/recipe-form.component.ts
 import { Component } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
 import { RecipeService } from '../services/recipe.service'; // Corrected import statement

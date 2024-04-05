@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RecipeFormComponent } from './recipe-form/recipe-form.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { BookingFormComponent } from './booking-form/booking-form.component';
+import { BookingListComponent } from './booking-list/booking-list.component';
 
 
 const routes: Routes = [
-  { path: 'addNewRecipe', component: RecipeFormComponent },
-  { path: 'viewRecipes', component: RecipeListComponent },
+  { path: 'addNewBooking', component: BookingFormComponent },
+  { path: 'viewBookings', component: BookingListComponent },
 
 ];
 
