@@ -10,6 +10,6 @@ namespace dotnetapp.Data
         {
         }
         
-        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 }

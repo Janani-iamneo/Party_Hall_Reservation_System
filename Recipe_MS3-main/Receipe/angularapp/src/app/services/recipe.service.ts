@@ -8,7 +8,7 @@ import { Recipe } from '../models/recipe.model';
   providedIn: 'root'
 })
 export class RecipeService {
-  private apiUrl = 'https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'; // Replace this with your API endpoint
+  private apiUrl = 'https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/'; // Replace this with your API endpoint
 
   constructor(private http: HttpClient) { }
 
