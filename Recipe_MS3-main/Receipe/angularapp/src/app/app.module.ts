@@ -9,6 +9,7 @@ import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { HeaderComponent } from './header/header.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { BookingFormComponent } from './booking-form/booking-form.component';
+import { BookingListComponent } from './booking-list/booking-list.component';
 
 
 
@@ -19,7 +20,8 @@ import { BookingFormComponent } from './booking-form/booking-form.component';
     RecipeFormComponent,
     HeaderComponent,
     RecipeListComponent,
-    BookingFormComponent
+    BookingFormComponent,
+    BookingListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<!-- <form (submit)="addRecipe()">
+<form (submit)="addRecipe()">
     <div>
       <label for="name">Name:</label>
       <input type="text" id="name" [(ngModel)]="newRecipe.name" name="name" required>
@@ -21,33 +21,4 @@
     </div>
     <button type="submit">Add Recipe</button>
   </form>
-   -->
-
-
-   <form (submit)="addBooking()">
-    <div>
-      <label for="customerName">Customer Name:</label>
-      <input type="text" id="customerName" [(ngModel)]="newBooking.customerName" name="customerName" required>
-    </div>
-    <div>
-      <label for="bookingDate">Booking Date:</label>
-      <input type="datetime-local" id="bookingDate" [(ngModel)]="newBooking.bookingDate" name="bookingDate" required>
-    </div>
-    <div>
-      <label for="numberOfGuests">Number of Guests:</label>
-      <input type="number" id="numberOfGuests" [(ngModel)]="newBooking.numberOfGuests" name="numberOfGuests" required>
-    </div>
-    <div>
-      <label for="contactNumber">Contact Number:</label>
-      <input type="tel" id="contactNumber" [(ngModel)]="newBooking.contactNumber" name="contactNumber" required>
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" [(ngModel)]="newBooking.email" name="email" required>
-    </div>
-    <div>
-      <label for="specialRequests">Special Requests:</label>
-      <textarea id="specialRequests" [(ngModel)]="newBooking.specialRequests" name="specialRequests"></textarea>
-    </div>
-    <button type="submit">Book Now</button>
-</form>
+  
