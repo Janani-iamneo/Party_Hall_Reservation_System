@@ -8,7 +8,7 @@ import { Recipe } from '../models/recipe.model';
   providedIn: 'root'
 })
 export class RecipeService {
-  private apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/'; // Replace this with your API endpoint
+  private apiUrl = 'https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'; // Replace this with your API endpoint
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class RecipeService {
     return this.http.post<Recipe>(`${this.apiUrl}api/Recipe`, recipe);
   }
 
-  addRecipe(): Observable<Recipe[]> {
+  getRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.apiUrl}api/Recipe`);
   }
 }
