@@ -6,17 +6,17 @@ import { Booking } from '../models/booking.model';
 @Injectable({
   providedIn: 'root'
 })
-export class RecipeService {
+export class BookingService {
   private apiUrl = 'https://8080-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/'; // Replace this with your API endpoint
 
   constructor(private http: HttpClient) { }
 
-  addRecipe(booking: Booking): Observable<Booking> {
-    return this.http.post<Booking>(`${this.apiUrl}api/Recipe`, booking);
+  addBooking(booking: Booking): Observable<Booking> {
+    return this.http.post<Booking>(`${this.apiUrl}api/Booking`, booking);
   }
 
-  getRecipes(): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}api/Recipe`);
+  getBookings(): Observable<Booking[]> {
+    return this.http.get<Booking[]>(`${this.apiUrl}api/Booking`);
   }
 }
 
