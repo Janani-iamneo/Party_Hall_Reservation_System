@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { HeaderComponent } from './header/header.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { BookingFormComponent } from './booking-form/booking-form.component';
 
 
 
@@ -17,7 +18,8 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
     AppComponent,
     RecipeFormComponent,
     HeaderComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    BookingFormComponent
   ],
   imports: [
     BrowserModule,
