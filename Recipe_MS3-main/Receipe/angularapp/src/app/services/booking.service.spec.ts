@@ -38,8 +38,10 @@ describe('BookingService', () => {
       bookingId: 1,
       customerName: 'Test CustomerName',
       bookingDate: 'Test BookingDate',
+      numberOfGuests: 1,
       contactNumber: 'Test ContactNumber',
-      email: 'Test Email'
+      email: 'Test Email',
+      specialRequests: 'Test SpecialRequests'
     };
 
     service.addBooking(mockBooking).subscribe((booking) => {
@@ -51,25 +53,26 @@ describe('BookingService', () => {
     req.flush(mockBooking);
   });
 
-  // fit('RecipeService_should_get_recipes', () => {
-  //   const mockRecipes: Recipe[] = [
-  //     {
-  //       recipeId: 1,
-  //       name: 'Test Recipe 1',
-  //       description: 'Test Description',
-  //       ingredients: 'Test Ingredients',
-  //       instructions: 'Test Instructions',
-  //       author: 'Test Author'
-  //     }
-  //   ];
+  fit('BookingService_should_get_bookings', () => {
+    const mockBookings: Booking[] = [
+      {
+        bookingId: 1,
+      customerName: 'Test CustomerName',
+      bookingDate: 'Test BookingDate',
+      numberOfGuests: 1,
+      contactNumber: 'Test ContactNumber',
+      email: 'Test Email',
+      specialRequests: 'Test SpecialRequests'
+      }
+    ];
 
-  //   service.getRecipes().subscribe((recipes) => {
-  //     expect(recipes).toEqual(mockRecipes);
-  //   });
+    service.getBookings().subscribe((bookings) => {
+      expect(bookings).toEqual(mockBookings);
+    });
 
-  //   const req = httpTestingController.expectOne(`${service['apiUrl']}api/Recipe`);
-  //   expect(req.request.method).toBe('GET');
-  //   req.flush(mockRecipes);
-  // });
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Booking`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockBookings);
+  });
 });
 
