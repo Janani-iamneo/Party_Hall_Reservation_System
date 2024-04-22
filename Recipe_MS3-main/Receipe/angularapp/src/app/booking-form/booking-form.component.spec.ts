@@ -49,7 +49,7 @@ describe('BookingFormComponent', () => {
     fit('BookingFormComponent_should_have_a_button_for_adding_a_booking', () => {
         const buttonElement: HTMLButtonElement = fixture.nativeElement.querySelector('button');
         expect(buttonElement).toBeTruthy();
-        expect(buttonElement.textContent).toContain('Add Booking');
+        expect(buttonElement.textContent).toContain('Book Now');
     });
 
     fit('BookingFormComponent_should_have_addBooking_method', () => {
