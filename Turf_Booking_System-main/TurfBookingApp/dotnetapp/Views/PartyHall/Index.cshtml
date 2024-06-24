@@ -41,9 +41,19 @@
     </tbody>
 </table> *@
 
-@model List<dotnetapp.Models.PartyHall>
+@model List<PartyHall>
 
-<h1>Party Hall Reservations</h1>
+<h1>Party Hall Reservation</h1>
+
+@* Add search form *@
+<form asp-action="Search" asp-controller="PartyHall" method="get">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by name..." name="name">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
 
 <table class="table">
     <thead>
@@ -73,14 +83,9 @@
                     }
                 </td>
                 <td>
-                    @if (partyHall.Availability)
-                    {
-                        <a id="bookButton" href="@Url.Action("Book","Booking", new { partyHallId = partyHall.PartyHallID })" class="btn btn-primary">Book</a>
-                    }
-                    <a id="deleteButton" href="@Url.Action("Delete","PartyHall", new { partyHallId = partyHall.PartyHallID })" class="btn btn-danger">Delete</a>
+                    <a asp-action="Delete" asp-route-partyHallId="@partyHall.PartyHallID" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-

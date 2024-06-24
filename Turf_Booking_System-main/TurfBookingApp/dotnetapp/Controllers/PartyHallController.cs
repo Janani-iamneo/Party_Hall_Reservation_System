@@ -46,5 +46,24 @@ namespace dotnetapp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+   public IActionResult Search(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                // Handle case where name is null or empty
+                return RedirectToAction(nameof(Index));
+            }
+
+            var partyHall = _dbContext.PartyHalls.FirstOrDefault(p => p.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase));
+
+            if (partyHall == null)
+            {
+                // Handle case where no party hall with the specified name is found
+                TempData["Message"] = $"Party hall '{name}' not found.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(nameof(Index), new List<PartyHall> { partyHall });
+        }
     }
 }
