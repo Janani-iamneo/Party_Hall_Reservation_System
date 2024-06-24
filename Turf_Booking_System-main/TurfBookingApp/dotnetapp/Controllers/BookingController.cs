@@ -36,10 +36,7 @@ namespace dotnetapp.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(booking);
-                }
+                
                 
                 var partyHall = _dbContext.PartyHalls
                     .Include(p => p.Bookings)
@@ -56,6 +53,10 @@ namespace dotnetapp.Controllers
                 if (booking.DurationInMinutes > 120)
                 {
                     throw new PartyHallBookingException("Booking duration cannot exceed 120 minutes");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return View(booking);
                 }
 
                 // Add booking to the database

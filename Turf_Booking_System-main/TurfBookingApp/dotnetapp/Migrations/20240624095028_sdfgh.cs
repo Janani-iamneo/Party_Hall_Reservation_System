@@ -4,7 +4,7 @@
 
 namespace dotnetapp.Migrations
 {
-    public partial class asdfgh : Migration
+    public partial class sdfgh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,8 +32,7 @@ namespace dotnetapp.Migrations
                     PartyHallID = table.Column<int>(type: "int", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DurationInMinutes = table.Column<int>(type: "int", nullable: false),
-                    BookingType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DurationInMinutes = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
