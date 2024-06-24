@@ -8,7 +8,7 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage();
     try{
       // await page.goto('https://api.example.com/');
-      await page.goto('https://api.example.com/');
+      await page.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/');
       await page.setViewport({
         width:1200,
         height:1200,
@@ -18,8 +18,8 @@ const puppeteer = require('puppeteer');
         const thElements = Array.from(document.querySelectorAll('table th'));
         return thElements.map(th => th.textContent.trim());
       });
-    //   console.log(headers);
-      if (headers[0] === 'Departure Location' && headers[3] === 'Maximum Capacity' && headers[4] === 'Booked Passengers' && headers[5] ==='Available Seats'){
+    // console.log(headers);
+      if (headers[0] === 'Party Hall ID' && headers[1] === 'Name' && headers[2] === 'Capacity' && headers[3] ==='Availability'){
         const rowCount = await page.$$eval('table tbody tr', rows => rows.length);
     // console.log(rowCount);
         if (rowCount > 0) {      
@@ -38,7 +38,7 @@ const puppeteer = require('puppeteer');
 
     const page2 = await browser.newPage();
     try {
-      await page2.goto('https://api.example.com/');
+      await page2.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/');
       await page2.setViewport({
         width: 1200,
         height: 1200,
