@@ -816,31 +816,60 @@ namespace dotnetapp.Tests
 //     Assert.AreEqual("Party hall 'Grand Celebration Hall' not found.", _partyHallController.TempData["Message"]); // Ensure proper message is set
 // }
 
+//     [Test]
+// public void Search_NoMatch_ReturnsNoMatchMessage()
+// {
+//     // Arrange
+//     var partyHalls = new List<PartyHall>
+//     {
+//         new PartyHall { PartyHallID = 1, Name = "Elegant Banquet Hall", Capacity = 100, Availability = true },
+//         new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true },
+//     };
+//     _dbContext.PartyHalls.AddRange(partyHalls);
+//     _dbContext.SaveChanges();
+
+//     _partyHallController.TempData.Clear();
+
+//     // Act
+//     var result = _partyHallController.Search("Grand Celebration Hall") as RedirectToActionResult;
+
+//     // Assert
+//     Assert.IsNotNull(result);
+//     Assert.AreEqual("Index", result.ActionName); // Ensure it redirects to Index action
+
+//     // Check if TempData is not null and contains the expected message
+//     Assert.IsTrue(_partyHallController.TempData.ContainsKey("Message"));
+//     Assert.AreEqual("Party hall 'Grand Celebration Hall' not found.", _partyHallController.TempData["Message"]);
+// }
+
     [Test]
-public void Search_NoMatch_ReturnsNoMatchMessage()
+public void Search_Matches_Exactly_ReturnsMatchingPartyHall()
 {
     // Arrange
     var partyHalls = new List<PartyHall>
     {
         new PartyHall { PartyHallID = 1, Name = "Elegant Banquet Hall", Capacity = 100, Availability = true },
-        new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true }
+        new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true },
+        new PartyHall { PartyHallID = 3, Name = "Grand Celebration Hall", Capacity = 200, Availability = true },
+        new PartyHall { PartyHallID = 4, Name = "Lavish Ballroom", Capacity = 150, Availability = true },
+        new PartyHall { PartyHallID = 5, Name = "Rustic Barn Venue", Capacity = 80, Availability = true }
     };
     _dbContext.PartyHalls.AddRange(partyHalls);
     _dbContext.SaveChanges();
 
-    _partyHallController.TempData.Clear();
+    // Clear any existing TempData to ensure a clean test environment
+    // _partyHallController.TempData.Clear();
 
     // Act
-    var result = _partyHallController.Search("Grand Celebration Hall") as RedirectToActionResult;
+    var result = _partyHallController.Search("Cozy Party Room") as ViewResult;
+    var model = result.Model as List<PartyHall>;
 
     // Assert
     Assert.IsNotNull(result);
-    Assert.AreEqual("Index", result.ActionName); // Ensure it redirects to Index action
-
-    // Check if TempData is not null and contains the expected message
-    Assert.IsTrue(_partyHallController.TempData.ContainsKey("Message"));
-    Assert.AreEqual("Party hall 'Grand Celebration Hall' not found.", _partyHallController.TempData["Message"]);
+    Assert.AreEqual(nameof(Index), result.ViewName); // Ensure it renders the Index view
+    Assert.IsNotNull(model); // Ensure the model is not null
+    Assert.AreEqual(1, model.Count); // Ensure exactly one party hall is returned
+    Assert.AreEqual("Cozy Party Room", model[0].Name); // Check that the returned party hall matches exactly
 }
-
     }
 }
