@@ -46,24 +46,33 @@ namespace dotnetapp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-   public IActionResult Search(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                // Handle case where name is null or empty
-                return RedirectToAction(nameof(Index));
-            }
+        public IActionResult Search(string name)
+{
+    if (string.IsNullOrEmpty(name))
+    {
+        // Handle case where name is null or empty
+        return RedirectToAction(nameof(Index));
+    }
 
-            var partyHall = _dbContext.PartyHalls.FirstOrDefault(p => p.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase));
+    // Convert search string to lower case for case-insensitive comparison
+    var lowerName = name.ToLower();
 
-            if (partyHall == null)
-            {
-                // Handle case where no party hall with the specified name is found
-                TempData["Message"] = $"Party hall '{name}' not found.";
-                return RedirectToAction(nameof(Index));
-            }
+    var partyHalls = _dbContext.PartyHalls
+        .Where(p => EF.Functions.Like(p.Name.ToLower(), "%" + lowerName + "%")) // Using EF.Functions.Like for wildcard search
+        .ToList();
 
-            return View(nameof(Index), new List<PartyHall> { partyHall });
-        }
+    // Check if any party hall names exactly match the search string
+    var exactMatch = partyHalls.FirstOrDefault(p => p.Name.ToLower() == lowerName);
+
+    if (exactMatch == null)
+    {
+        // Handle case where no exact match is found
+        TempData["Message"] = $"No party hall found matching '{name}'.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    return View(nameof(Index), partyHalls);
+}
+
     }
 }

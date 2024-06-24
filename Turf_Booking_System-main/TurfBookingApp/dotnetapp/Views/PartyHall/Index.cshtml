@@ -45,7 +45,13 @@
 
 <h1>Party Hall Reservation</h1>
 
-@* Add search form *@
+<!-- Display message if TempData["Message"] is not null -->
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<!-- Add search form -->
 <form asp-action="Search" asp-controller="PartyHall" method="get">
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Search by name..." name="name">
