@@ -4,15 +4,15 @@
 
 namespace dotnetapp.Migrations
 {
-    public partial class InitialSetUp : Migration
+    public partial class asdfgh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Turfs",
+                name: "PartyHalls",
                 columns: table => new
                 {
-                    TurfID = table.Column<int>(type: "int", nullable: false)
+                    PartyHallID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
@@ -20,7 +20,7 @@ namespace dotnetapp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Turfs", x => x.TurfID);
+                    table.PrimaryKey("PK_PartyHalls", x => x.PartyHallID);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,37 +29,39 @@ namespace dotnetapp.Migrations
                 {
                     BookingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TurfID = table.Column<int>(type: "int", nullable: true),
+                    PartyHallID = table.Column<int>(type: "int", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DurationInMinutes = table.Column<int>(type: "int", nullable: false)
+                    DurationInMinutes = table.Column<int>(type: "int", nullable: false),
+                    BookingType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bookings", x => x.BookingID);
                     table.ForeignKey(
-                        name: "FK_Bookings_Turfs_TurfID",
-                        column: x => x.TurfID,
-                        principalTable: "Turfs",
-                        principalColumn: "TurfID");
+                        name: "FK_Bookings_PartyHalls_PartyHallID",
+                        column: x => x.PartyHallID,
+                        principalTable: "PartyHalls",
+                        principalColumn: "PartyHallID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Turfs",
-                columns: new[] { "TurfID", "Availability", "Capacity", "Name" },
+                table: "PartyHalls",
+                columns: new[] { "PartyHallID", "Availability", "Capacity", "Name" },
                 values: new object[,]
                 {
-                    { 1, true, 4, "Green Cricket Meadow" },
-                    { 2, true, 6, "Sunny Football Fields" },
-                    { 3, true, 2, "Golden Golf Garden" },
-                    { 4, true, 10, "Silver Tennis Oasis" },
-                    { 5, true, 2, "Blue Basketball Arena" }
+                    { 1, true, 100, "Elegant Banquet Hall" },
+                    { 2, true, 50, "Cozy Party Room" },
+                    { 3, true, 200, "Grand Celebration Hall" },
+                    { 4, true, 150, "Lavish Ballroom" },
+                    { 5, true, 80, "Rustic Barn Venue" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_TurfID",
+                name: "IX_Bookings_PartyHallID",
                 table: "Bookings",
-                column: "TurfID");
+                column: "PartyHallID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -68,7 +70,7 @@ namespace dotnetapp.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "Turfs");
+                name: "PartyHalls");
         }
     }
 }

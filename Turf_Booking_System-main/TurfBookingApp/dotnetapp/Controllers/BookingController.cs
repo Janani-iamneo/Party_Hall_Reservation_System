@@ -17,21 +17,22 @@ namespace dotnetapp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Book(int turfId)
+        public IActionResult Book(int partyHallId)
         {
-            var turf = _dbContext.Turfs
-                .Include(t => t.Bookings)
-                .FirstOrDefault(t => t.TurfID == turfId);
+            var partyHall = _dbContext.PartyHalls
+                .Include(p => p.Bookings)
+                .FirstOrDefault(p => p.PartyHallID == partyHallId);
 
-            if (turf == null)
+            if (partyHall == null)
             {
                 return NotFound();
             }
+            
             return View();
         }
 
         [HttpPost]
-        public IActionResult Book(int turfId, Booking booking)
+        public IActionResult Book(int partyHallId, Booking booking)
         {
             try
             {
@@ -40,21 +41,21 @@ namespace dotnetapp.Controllers
                     return View(booking);
                 }
                 
-                var turf = _dbContext.Turfs
-                    .Include(t => t.Bookings)
-                    .FirstOrDefault(t => t.TurfID == turfId);
+                var partyHall = _dbContext.PartyHalls
+                    .Include(p => p.Bookings)
+                    .FirstOrDefault(p => p.PartyHallID == partyHallId);
 
-                if (turf == null)
+                if (partyHall == null)
                 {
                     return NotFound();
                 }
 
-                // Assign Turf ID to the booking
-                booking.TurfID = turfId;
+                // Assign PartyHall ID to the booking
+                booking.PartyHallID = partyHallId;
                 // Check if DurationInMinutes exceeds 120
                 if (booking.DurationInMinutes > 120)
                 {
-                    throw new TurfBookingException("Booking duration cannot exceed 120 minutes");
+                    throw new PartyHallBookingException("Booking duration cannot exceed 120 minutes");
                 }
 
                 // Add booking to the database
@@ -74,7 +75,7 @@ namespace dotnetapp.Controllers
         public IActionResult Details(int bookingId)
         {
             var booking = _dbContext.Bookings
-                .Include(b => b.Turf)
+                .Include(b => b.PartyHall)
                 .FirstOrDefault(b => b.BookingID == bookingId);
 
             if (booking == null)

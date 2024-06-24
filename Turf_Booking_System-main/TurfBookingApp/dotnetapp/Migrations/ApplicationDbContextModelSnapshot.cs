@@ -30,6 +30,10 @@ namespace dotnetapp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingID"), 1L, 1);
 
+                    b.Property<string>("BookingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -41,23 +45,24 @@ namespace dotnetapp.Migrations
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TurfID")
+                    b.Property<int?>("PartyHallID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("BookingID");
 
-                    b.HasIndex("TurfID");
+                    b.HasIndex("PartyHallID");
 
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Turf", b =>
+            modelBuilder.Entity("dotnetapp.Models.PartyHall", b =>
                 {
-                    b.Property<int>("TurfID")
+                    b.Property<int>("PartyHallID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TurfID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PartyHallID"), 1L, 1);
 
                     b.Property<bool>("Availability")
                         .HasColumnType("bit");
@@ -69,58 +74,60 @@ namespace dotnetapp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TurfID");
+                    b.HasKey("PartyHallID");
 
-                    b.ToTable("Turfs");
+                    b.ToTable("PartyHalls");
 
                     b.HasData(
                         new
                         {
-                            TurfID = 1,
+                            PartyHallID = 1,
                             Availability = true,
-                            Capacity = 4,
-                            Name = "Green Cricket Meadow"
+                            Capacity = 100,
+                            Name = "Elegant Banquet Hall"
                         },
                         new
                         {
-                            TurfID = 2,
+                            PartyHallID = 2,
                             Availability = true,
-                            Capacity = 6,
-                            Name = "Sunny Football Fields"
+                            Capacity = 50,
+                            Name = "Cozy Party Room"
                         },
                         new
                         {
-                            TurfID = 3,
+                            PartyHallID = 3,
                             Availability = true,
-                            Capacity = 2,
-                            Name = "Golden Golf Garden"
+                            Capacity = 200,
+                            Name = "Grand Celebration Hall"
                         },
                         new
                         {
-                            TurfID = 4,
+                            PartyHallID = 4,
                             Availability = true,
-                            Capacity = 10,
-                            Name = "Silver Tennis Oasis"
+                            Capacity = 150,
+                            Name = "Lavish Ballroom"
                         },
                         new
                         {
-                            TurfID = 5,
+                            PartyHallID = 5,
                             Availability = true,
-                            Capacity = 2,
-                            Name = "Blue Basketball Arena"
+                            Capacity = 80,
+                            Name = "Rustic Barn Venue"
                         });
                 });
 
             modelBuilder.Entity("dotnetapp.Models.Booking", b =>
                 {
-                    b.HasOne("dotnetapp.Models.Turf", "Turf")
+                    b.HasOne("dotnetapp.Models.PartyHall", "PartyHall")
                         .WithMany("Bookings")
-                        .HasForeignKey("TurfID");
+                        .HasForeignKey("PartyHallID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Turf");
+                    b.Navigation("PartyHall");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Turf", b =>
+            modelBuilder.Entity("dotnetapp.Models.PartyHall", b =>
                 {
                     b.Navigation("Bookings");
                 });

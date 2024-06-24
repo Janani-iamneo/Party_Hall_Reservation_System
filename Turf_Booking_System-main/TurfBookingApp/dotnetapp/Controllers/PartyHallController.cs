@@ -5,43 +5,43 @@ using dotnetapp.Models;
 
 namespace dotnetapp.Controllers
 {
-    public class TurfController : Controller
+    public class PartyHallController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public TurfController(ApplicationDbContext dbContext)
+        public PartyHallController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public IActionResult Index()
         {
-            var tables = _dbContext.Turfs.ToList();
-            return View(tables);
+            var partyHalls = _dbContext.PartyHalls.ToList();
+            return View(partyHalls);
         }
 
-        public IActionResult Delete(int turfId)
+        public IActionResult Delete(int partyHallId)
         {
-            var turf = _dbContext.Turfs.FirstOrDefault(t => t.TurfID == turfId);
-            if (turf == null)
+            var partyHall = _dbContext.PartyHalls.FirstOrDefault(p => p.PartyHallID == partyHallId);
+            if (partyHall == null)
             {
                 return NotFound();
             }
 
-            return View(turf);
+            return View(partyHall);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int turfId)
+        public IActionResult DeleteConfirmed(int partyHallId)
         {
-            var turf = _dbContext.Turfs.FirstOrDefault(t => t.TurfID == turfId);
-            if (turf == null)
+            var partyHall = _dbContext.PartyHalls.FirstOrDefault(p => p.PartyHallID == partyHallId);
+            if (partyHall == null)
             {
                 return NotFound();
             }
 
-            _dbContext.Turfs.Remove(turf);
+            _dbContext.PartyHalls.Remove(partyHall);
             _dbContext.SaveChanges();
 
             return RedirectToAction(nameof(Index));
