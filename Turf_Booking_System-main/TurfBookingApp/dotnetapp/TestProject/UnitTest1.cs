@@ -791,25 +791,56 @@ namespace dotnetapp.Tests
             Assert.That(partyHall.Availability, Is.TypeOf<bool>());
         }
 
-        [Test]
-        public void Search_NoMatch_ReturnsNoMatchMessage()
-        {
-            // Arrange
-            var partyHalls = new List<PartyHall>
-            {
-                new PartyHall { PartyHallID = 1, Name = "Elegant Banquet Hall", Capacity = 100, Availability = true },
-                new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true }
-            };
-            _dbContext.PartyHalls.AddRange(partyHalls);
-            _dbContext.SaveChanges();
+//         [Test]
+// public void Search_NoMatch_ReturnsNoMatchMessage()
+// {
+//     // Arrange
+//     var partyHalls = new List<PartyHall>
+//     {
+//         new PartyHall { PartyHallID = 1, Name = "Elegant Banquet Hall", Capacity = 100, Availability = true },
+//         new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true }
+//     };
+//     _dbContext.PartyHalls.AddRange(partyHalls);
+//     _dbContext.SaveChanges();
 
-            // Act
-            var result = _partyHallController.Search("Grand Celebration Hall") as RedirectToActionResult;
+//     // Clear any existing TempData to ensure a clean test environment
+//     _partyHallController.TempData.Clear();
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Index", result.ActionName); // Ensure it redirects to Index action
-            Assert.AreEqual("Party hall 'Grand Celebration Hall' not found.", _partyHallController.TempData["Message"]); // Ensure proper message is set
-        }
+//     // Act
+//     var result = _partyHallController.Search("Grand Celebration Hall") as RedirectToActionResult;
+
+//     // Assert
+//     Assert.IsNotNull(result);
+//     Assert.AreEqual("Index", result.ActionName); // Ensure it redirects to Index action
+//     Assert.IsTrue(_partyHallController.TempData.ContainsKey("Message")); // Check if TempData contains key "Message"
+//     Assert.AreEqual("Party hall 'Grand Celebration Hall' not found.", _partyHallController.TempData["Message"]); // Ensure proper message is set
+// }
+
+    [Test]
+public void Search_NoMatch_ReturnsNoMatchMessage()
+{
+    // Arrange
+    var partyHalls = new List<PartyHall>
+    {
+        new PartyHall { PartyHallID = 1, Name = "Elegant Banquet Hall", Capacity = 100, Availability = true },
+        new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true }
+    };
+    _dbContext.PartyHalls.AddRange(partyHalls);
+    _dbContext.SaveChanges();
+
+    _partyHallController.TempData.Clear();
+
+    // Act
+    var result = _partyHallController.Search("Grand Celebration Hall") as RedirectToActionResult;
+
+    // Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual("Index", result.ActionName); // Ensure it redirects to Index action
+
+    // Check if TempData is not null and contains the expected message
+    Assert.IsTrue(_partyHallController.TempData.ContainsKey("Message"));
+    Assert.AreEqual("Party hall 'Grand Celebration Hall' not found.", _partyHallController.TempData["Message"]);
+}
+
     }
 }

@@ -57,7 +57,7 @@ namespace dotnetapp.Controllers
     // Convert search string to lower case for case-insensitive comparison
     var lowerName = name.ToLower();
 
-    var partyHalls = _dbContext.PartyHalls
+    var partyHalls = _dbContext.PartyHalls                                                              
         .Where(p => EF.Functions.Like(p.Name.ToLower(), "%" + lowerName + "%")) // Using EF.Functions.Like for wildcard search
         .ToList();
 
