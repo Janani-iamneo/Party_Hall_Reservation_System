@@ -24,16 +24,16 @@ const puppeteer = require('puppeteer');
     // console.log(rowCount);
         if (rowCount > 0) {      
           await page.waitForSelector('table tbody tr', { timeout: 5000 } );
-          console.log('TESTCASE:In_Availabletrains_Page_Table_Headers_and_Rows_are_Correct_and_Exists:success');
+          console.log('TESTCASE:In_Index_Page_Table_Headers_and_Rows_are_Correct_and_Exists:success');
         }else{          
-          console.log('TESTCASE:In_Availabletrains_Page_Table_Headers_and_Rows_are_Correct_and_Exists:failure');
+          console.log('TESTCASE:In_Index_Page_Table_Headers_and_Rows_are_Correct_and_Exists:failure');
         }
       }else{
-        console.log('TESTCASE:In_Availabletrains_Page_Table_Headers_and_Rows_are_Correct_and_Exists:failure');
+        console.log('TESTCASE:In_Index_Page_Table_Headers_and_Rows_are_Correct_and_Exists:failure');
       }
     }
     catch(e){
-      console.log('TESTCASE:In_Availabletrains_Page_Table_Headers_and_Rows_are_Correct_and_Exists:failure');
+      console.log('TESTCASE:In_Index_Page_Table_Headers_and_Rows_are_Correct_and_Exists:failure');
     }
 
     const page2 = await browser.newPage();
@@ -50,16 +50,16 @@ const puppeteer = require('puppeteer');
       await page2.waitForSelector('#contactNumber', { timeout: 2000 });
       await page2.waitForSelector('#durationInMinutes', { timeout: 2000 });
       const Message = await page2.$eval('h1', element => element.textContent.toLowerCase());
-      console.log("Message",Message);
+      // console.log("Message",Message);
     if(Message.includes("make a reservation")&&urlAfterClick.toLowerCase().includes('/booking/book'))
     {
-    console.log('TESTCASE:Check_Successful_Navigation_to_Passenger_Booking_Page_and_Presence_of_Name_Email_Phone_Elements:success');
+    console.log('TESTCASE:Check_Successful_Navigation_to_PartyHall_Reservation_Page_and_Presence_of_Name_Email_Phone_Elements:success');
     }    
     else{
-    console.log('TESTCASE:Check_Successful_Navigation_to_Passenger_Booking_Page_and_Presence_of_Name_Email_Phone_Elements:failure');
+    console.log('TESTCASE:Check_Successful_Navigation_to_PartyHall_Reservation_Page_and_Presence_of_Name_Email_Phone_Elements:failure');
     }
     } catch (e) {
-      console.log('TESTCASE:Check_Successful_Navigation_to_Passenger_Booking_Page_and_Presence_of_Name_Email_Phone_Elements:failure');
+      console.log('TESTCASE:Check_Successful_Navigation_to_PartyHall_Reservation_Page_and_Presence_of_Name_Email_Phone_Elements:failure');
     } 
 
 
@@ -82,15 +82,15 @@ const puppeteer = require('puppeteer');
       // console.log("Message", Message1);
     if(Message1.includes("delete party hall") && urlAfterClick.toLowerCase().includes('/partyhall/delete'))
     {
-    console.log('TESTCASE:Check_Successful_Navigation_to_Train_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:success');
+    console.log('TESTCASE:Check_Successful_Navigation_to_PartyHall_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:success');
     }    
     else{
-    console.log('TESTCASE:Check_Successful_Navigation_to_Train_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:failure');
+    console.log('TESTCASE:Check_Successful_Navigation_to_PartyHall_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:failure');
     }
 
     }
   catch(e){
-    console.log('TESTCASE:Check_Successful_Navigation_to_Train_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:failure');
+    console.log('TESTCASE:Check_Successful_Navigation_to_PartyHall_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:failure');
   }
   
   finally{
