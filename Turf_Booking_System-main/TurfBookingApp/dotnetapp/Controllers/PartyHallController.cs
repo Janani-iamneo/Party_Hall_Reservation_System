@@ -2,6 +2,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotnetapp.Models;
+using dotnetapp.Data;
 
 namespace dotnetapp.Controllers
 {

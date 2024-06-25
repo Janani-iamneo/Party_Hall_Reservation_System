@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using dotnetapp.Models;
+using dotnetapp.Data;
 
 #nullable disable
 
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240624095028_sdfgh")]
-    partial class sdfgh
+    [Migration("20240625065641_wertyui")]
+    partial class wertyui
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

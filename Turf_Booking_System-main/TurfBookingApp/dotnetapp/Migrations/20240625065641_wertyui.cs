@@ -4,7 +4,7 @@
 
 namespace dotnetapp.Migrations
 {
-    public partial class sdfgh : Migration
+    public partial class wertyui : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

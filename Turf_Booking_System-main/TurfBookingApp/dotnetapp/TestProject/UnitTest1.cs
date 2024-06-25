@@ -7,6 +7,7 @@ using NUnit.Framework;
 using dotnetapp.Controllers;
 using dotnetapp.Models;
 using dotnetapp.Exceptions;
+using dotnetapp.Data;
 
 namespace dotnetapp.Tests
 {

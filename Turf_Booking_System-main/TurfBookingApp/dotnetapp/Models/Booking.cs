@@ -12,6 +12,5 @@ namespace dotnetapp.Models
         public string CustomerName { get; set; }
         public string ContactNumber { get; set; }
         public int DurationInMinutes { get; set; }
-        // public string BookingType { get; set; }
     }
 }

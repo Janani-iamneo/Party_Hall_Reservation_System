@@ -1,4 +1,6 @@
 using dotnetapp.Models;
+using dotnetapp.Data;
+
 using Microsoft.EntityFrameworkCore;
 
 
