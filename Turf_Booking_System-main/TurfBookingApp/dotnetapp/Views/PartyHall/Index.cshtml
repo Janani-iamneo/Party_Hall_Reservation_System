@@ -93,7 +93,7 @@
                     {
                         <a id="bookButton" href="@Url.Action("Book","Booking", new { PartyHallID = partyHall.PartyHallID })" class="btn btn-primary">Book</a>
                     }
-                    <a asp-action="Delete" asp-route-partyHallId="@partyHall.PartyHallID" class="btn btn-danger">Delete</a>
+                    <a id = "delete" asp-action="Delete" asp-route-partyHallId="@partyHall.PartyHallID" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

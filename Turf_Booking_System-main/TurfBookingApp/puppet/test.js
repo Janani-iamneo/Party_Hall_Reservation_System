@@ -38,7 +38,7 @@ const puppeteer = require('puppeteer');
 
     const page2 = await browser.newPage();
     try {
-      await page2.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/');
+      await page2.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/Booking/Book?PartyHallID=1');
       await page2.setViewport({
         width: 1200,
         height: 1200,
@@ -66,7 +66,7 @@ const puppeteer = require('puppeteer');
   const page3 = await browser.newPage();
 
     try {        
-      await page3.goto('https://api.example.com/');
+      await page3.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/');
       await page3.setViewport({
         width: 1200,
         height: 800,
@@ -75,11 +75,12 @@ const puppeteer = require('puppeteer');
       await page3.waitForSelector('#delete', { timeout: 2000 });
       await page3.click('#delete');
       const urlAfterClick = page3.url();  
-      await page3.waitForSelector('h2', { timeout: 5000 });
+      await page3.waitForSelector('h1', { timeout: 5000 });
       await page3.waitForSelector('#delete', { timeout: 2000 });
       await page3.waitForSelector('#cancel', { timeout: 2000 });
-      const Message = await page3.$eval('h2', element => element.textContent.toLowerCase());
-    if(Message.includes("delete train") && urlAfterClick.toLowerCase().includes('train/deleteconfirm'))
+      const Message1 = await page3.$eval('h1', element => element.textContent.toLowerCase());
+      // console.log("Message", Message1);
+    if(Message1.includes("delete party hall") && urlAfterClick.toLowerCase().includes('/partyhall/delete'))
     {
     console.log('TESTCASE:Check_Successful_Navigation_to_Train_Deleting_Page_and_Presence_of_h2_delete_cancel_Elements:success');
     }    
