@@ -43,14 +43,15 @@ const puppeteer = require('puppeteer');
         width: 1200,
         height: 1200,
       });
-      await page2.waitForSelector('#book', { timeout: 2000 });
-      await page2.click('#book');
+      await page2.waitForSelector('#bookButton', { timeout: 2000 });
+      await page2.click('#bookButton');
       const urlAfterClick = page2.url();
-      await page2.waitForSelector('#Name', { timeout: 2000 });
-      await page2.waitForSelector('#Email', { timeout: 2000 });
-      await page2.waitForSelector('#Phone', { timeout: 2000 });
-      const Message = await page2.$eval('h2', element => element.textContent.toLowerCase());
-    if(Message.includes("book ticket")&&urlAfterClick.toLowerCase().includes('passenger/bookseat'))
+      await page2.waitForSelector('#customerName', { timeout: 2000 });
+      await page2.waitForSelector('#contactNumber', { timeout: 2000 });
+      await page2.waitForSelector('#durationInMinutes', { timeout: 2000 });
+      const Message = await page2.$eval('h1', element => element.textContent.toLowerCase());
+      console.log("Message",Message);
+    if(Message.includes("make a reservation")&&urlAfterClick.toLowerCase().includes('/booking/book'))
     {
     console.log('TESTCASE:Check_Successful_Navigation_to_Passenger_Booking_Page_and_Presence_of_Name_Email_Phone_Elements:success');
     }    
