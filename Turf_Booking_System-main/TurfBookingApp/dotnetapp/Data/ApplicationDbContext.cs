@@ -23,7 +23,6 @@ namespace dotnetapp.Data
             base.OnModelCreating(modelBuilder);
 
             // Seed data for PartyHalls
-           // Seed data for PartyHalls
             modelBuilder.Entity<PartyHall>().HasData(
                 new PartyHall { PartyHallID = 1, Name = "Elegant Banquet Hall", Capacity = 100, Availability = true },
                 new PartyHall { PartyHallID = 2, Name = "Cozy Party Room", Capacity = 50, Availability = true },
