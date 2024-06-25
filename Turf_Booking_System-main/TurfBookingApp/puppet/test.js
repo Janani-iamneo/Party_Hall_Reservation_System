@@ -38,7 +38,7 @@ const puppeteer = require('puppeteer');
 
     const page2 = await browser.newPage();
     try {
-      await page2.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/Booking/Book?PartyHallID=1');
+      await page2.goto('https://8081-fcebdccccdbcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/');
       await page2.setViewport({
         width: 1200,
         height: 1200,
